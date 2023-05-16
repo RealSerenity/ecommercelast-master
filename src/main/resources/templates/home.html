@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link th:href="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css'}" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+  <a href="#default" class="logo">Logo</a>
+  <div class="header-right">
+    <a class="active" href="/" th:text="'Anasayfa'"></a>
+      <a th:if="${auth}" href="/hesap_sayfasi" th:text="'Hesap'"></a>
+      <a th:unless="${auth}" href="/user_kayit" th:text="'Giriş yap'"></a>
+  </div>
+</div>
+
+  <div class="w3-sidebar w3-bar-block">
+    <h3 th:text="'Kategoriler'"></h3>
+    <a th:href="'/'" class="w3-bar-item w3-button w3-border-bottom" th:text="'Tümü'"></a>
+    <div th:each="category : ${categories}" >
+    <a th:href="@{'/kategori_sayfasi?id='+${category.getId()}}" class="w3-bar-item w3-button w3-border-bottom" th:text="${category.getCategoryName()}"></a>
+      <br>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="card">
+    <div class="card-block">
+         <table class="table table-hover" th:each="category : ${categories}">
+           <thead>
+            <h3 th:text="'Kategori : ' + ${category.getCategoryName()}"></h3>
+           <tr>
+             <th th:text="'Name'" ></th>
+             <th th:text="'Seller'"></th>
+             <th th:text="'Price'"></th>
+             <th th:text="'Stock'"></th>
+             <th></th>
+           </tr>
+           </thead>
+           <tbody>
+           <tr th:if="${productService.getProductsByCategory(category).size() > 0}" th:each="product: ${productService.getProductsByCategory(category)}">
+             <td th:text="${product.getName()}"></td>
+             <td th:text="${userService.getById(product.getSellerId()).getBody().getUsername()}"></td>
+             <td th:text="${product.getPrice()}"></td>
+             <td th:text="${product.getStock()}"></td>
+             <td><a th:href="@{'/urun_sayfasi?productId='+${product.getId()}}" class="w3-bar-item w3-button w3-border-bottom" th:text="'Ürün sayfasına git'"></a></td>
+           <tr/>
+           <tr th:unless="${productService.getProductsByCategory(category).size() > 0}">
+             <td  th:text="'0 ürün'"></td>
+             <td></td>
+             <td></td>
+             <td></td>
+           <tr/>
+           </tbody>
+         </table>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

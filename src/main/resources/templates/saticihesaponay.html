@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/main.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+  <a href="#default" class="logo">Logo</a>
+  <div class="header-right">
+    <a href="/" th:text="'Anasayfa'"></a>
+    <a class="active" href="/hesap_sayfasi" th:text="'Hesap'"></a>
+  </div>
+</div>
+<div class="container">
+  <form th:action="@{'/satici_hesap_onay'}" name="saticihesaponayform" th:method="post" th:object="${onayRequestDto}">
+      <label for="textonay" th:text="${saticihesaptext}+' yazın!'"></label><br>
+      <input th:field="*{onayMessage}" type="text" id="textonay" name="textonay" th:reqired="required"><br><br>
+     <input type="checkbox" id="onay1" name="onay1" value="Bike" th:required="required">
+      <label for="onay1" th:text="'Satıcı hesabı kuralları.'" ></label><br><br>
+      <input type="submit" value="Submit">
+  </form>
+</div>
+</body>
+</html>

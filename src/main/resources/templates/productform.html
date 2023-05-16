@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+    <a href="#default" class="logo">Logo</a>
+    <div class="header-right">
+        <a href="/" th:text="'Anasayfa'"></a>
+        <a class="active" href="/hesap_sayfasi" th:text="'Hesap'"></a>
+    </div>
+</div>
+    <div class="container">
+        <form th:method="post" th:action="@{'product_yayınla'}" th:object="${productDto}" >
+            <label for="name" th:text="'Name : '"></label>
+            <input  type="text" id="name"  th:field="*{name}" th:value="0" />
+            <br>
+            <label for="stock" th:text="'Stock : '"></label>
+            <input  type="number" id="stock"  th:field="*{stock}" th:value="0" />
+            <br>
+            <label for="price" th:text="'Price: '"></label>
+            <input  type="number" id="price"  th:field="*{price}" th:value="0" />
+            <br>
+            <label for="addresses" th:text="'Kategori : '"></label>
+            <select th:field="*{categoryId}"  name="addresses"  id="addresses">
+                <div  th:each="category : ${categoryService.getAll()}">
+                    <option  id="adres"  name="adres" th:value="${category.getId()}" th:text="${category.getCategoryName()}"></option>
+                </div>
+
+            </select>
+            <br>
+            <button th:text="'Ürünü yayınla'"></button>
+        </form>
+
+    </div>
+</body>
+</html>

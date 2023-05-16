@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+    <a href="#default" class="logo">Logo</a>
+    <div class="header-right">
+        <a href="/" th:text="'Anasayfa'"></a>
+        <a href="/hesap_sayfasi" th:text="'Hesap'"></a>
+    </div>
+</div>
+
+<div class="container">
+    <span th:text="'Satici ismi : ' +${seller.getUsername()}"></span>
+    <br>
+    <br>
+    <div class="card">
+        <div class="card-block">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="'Ürün adı'" ></th>
+                    <th th:text="'Kategori'"></th>
+                    <th th:text="'Fiyat'"></th>
+                    <th th:text="'Stok adeti'"></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${products.size() > 0}" th:each="product : ${products}">
+                    <td th:text="${product.getName()}"></td>
+                    <td th:text="${categoryService.getById(product.getCategoryId()).getBody().getCategoryName()}"></td>
+                    <td th:text="${product.getPrice()}"></td>
+                    <td th:text="${product.getStock()}"></td>
+                    <td><a th:href="@{'/siparis_sayfasi?productId='+${product.getId()}}" class="w3-bar-item w3-button w3-border-bottom" th:text="'Sipariş ver'"></a></td>
+                <tr/>
+                <tr th:unless="${products.size() > 0}">
+                    <td  th:text="'0 sipariş'"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                <tr/>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/main.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+    <a href="#default" class="logo">Logo</a>
+    <div class="header-right">
+        <a href="/" th:text="'Anasayfa'"></a>
+        <a class="active" href="/hesap_sayfasi" th:text="'Hesap'"></a>
+    </div>
+</div>
+    <div class="container">
+        <a th:href="@{'/kullanici_guncellestir'}" th:text="'Kullanıcı bilgilerini güncelle'"></a><br><br>
+        <a th:href="@{'/siparisler?userId=' + ${userId}}" th:text="'Siparişlerim'"></a><br><br>
+        <div th:unless="${seller}">
+            <a  th:href="@{'/satici_hesap_onay'}" th:text="'Satıcı hesabı oluştur'"></a>
+        </div>
+        <br>
+        <div th:if="${seller}">
+            <a th:href="@{'/satici_urunleri'}" th:text="'Ürünlerim'"></a>
+        </div>
+        <br>
+        <br>
+        <form th:action="@{'/logout'}" name="logoutform" th:method="post">
+            <input type="submit" th:value="'Çıkış yap'">
+        </form>
+    </div>
+</body>
+</html>
